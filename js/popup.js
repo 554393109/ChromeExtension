@@ -1,10 +1,5 @@
 
-function sayHello() {
-    var message = document.createTextNode("Hello World!");
-    var out = document.createElement("div");
-    out.appendChild(message);
-    document.body.appendChild(out);
-
+function init() {
     chrome.tabs.query(
         {
             active: true,
@@ -13,12 +8,18 @@ function sayHello() {
         function (tabs) {
             let currentTabURL = tabs[0].url;
             currentTabID = tabs[0].id;
-            window.alert(JSON.stringify({
+            let info = JSON.stringify({
                 ID: currentTabID,
                 URL: currentTabURL
-            }));
+            });
+
+            var message = document.createTextNode(info);
+            var out = document.createElement("div");
+            out.appendChild(message);
+            document.body.appendChild(out);
+
             document.title = document.title + "-" + currentTabURL;
         }
     );
 }
-window.onload = sayHello;
+window.onload = init;
